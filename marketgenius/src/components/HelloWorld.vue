@@ -55,19 +55,19 @@
             >
               <v-list color="transparent">
                 <v-list-item
-                  v-for="item in cart"
-                  :key="item.name"
+                  v-for="cartItem in cart"
+                  :key="cartItem.name"
                   link
                 >
                   <v-list-item-content>
                     <v-list-item-title >
-                      Product : {{ item.product_name }}
+                      Product : {{ cartItem.product_name }}
                       <br>
-                      Quantity : {{ item.quantity }}
+                      Quantity : {{ cartItem.quantity }}
                       <br>
-                      Price/u : {{ item.product_price }}
+                      Price/u : {{ cartItem.product_price }}
                       <br>
-                      Lot price : {{ item.quantity * item.product_price }}
+                      Lot price : {{ cartItem.quantity * cartItem.product_price }}
                     </v-list-item-title>
                   </v-list-item-content>
                 </v-list-item>
@@ -125,10 +125,24 @@ export default {
   },
   methods: {
     addToCart (item) {
-      this.cart.push(item)
+      let findIndex = this.cart.findIndex(obj => obj.product_id === item.product_id)
+      if (findIndex !== -1) {
+        const number = this.cart[findIndex].quantity
+        this.cart[findIndex].quantity = number + 1
+      } else {
+        this.cart.push(item)
+      }
     },
     deleteToCart (item) {
-      this.cart = this.cart.filter(el => el.product_name !== item.product_name)
+      let findIndex = this.cart.findIndex(obj => obj.product_id === item.product_id)
+      if (findIndex !== -1) {
+        const number = this.cart[findIndex].quantity
+        if (number > 1) {
+          this.cart[findIndex].quantity = number - 1
+        } else {
+          this.cart = this.cart.filter(el => el.product_id !== item.product_id)
+        }
+      }
     },
     createTicket () {
       axios.post('http://localhost:8000/market/tickets/',
@@ -151,7 +165,7 @@ export default {
     },
     totalPrice () {
       return this.cart.reduce(
-        (total, item) => total + item.quantity * item.product_price,
+        (total, item) => parseFloat((parseFloat(total) + item.quantity * item.product_price).toFixed(2)),
         0
       )
     }
