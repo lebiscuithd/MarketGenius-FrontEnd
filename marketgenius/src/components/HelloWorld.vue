@@ -45,7 +45,7 @@
             >
               <!--  -->
               <p>hello</p>
-              <Product @clicked="onClickChild" v-for="product in products" :key="product.id" :product="product"/>
+              <Product @addItem="addToCart" @deleteItem="deleteToCart" v-for="product in products" :key="product.id" :product="product"/>
             </v-sheet>
           </v-col>
           <v-col cols="4">
@@ -60,8 +60,14 @@
                   link
                 >
                   <v-list-item-content>
-                    <v-list-item-title>
-                      {{ item.name }}
+                    <v-list-item-title >
+                      Product : {{ item.product_name }}
+                      <br>
+                      Quantity : {{ item.quantity }}
+                      <br>
+                      Price/u : {{ item.product_price }}
+                      <br>
+                      Lot price : {{ item.quantity * item.product_price }}
                     </v-list-item-title>
                   </v-list-item-content>
                 </v-list-item>
@@ -73,7 +79,11 @@
                   color="grey lighten-4"
                 >
                   <v-list-item-content>
-                    <v-list-item-title>
+                    <v-list-item-title @click="createTicket()">
+                      {{ totalQuantity }} products
+                      <br>
+                      Total : {{ totalPrice }} €
+                      <br>
                       Create Ticket
                     </v-list-item-title>
                   </v-list-item-content>
@@ -114,8 +124,36 @@ export default {
       })
   },
   methods: {
-    onClickChild (item) {
+    addToCart (item) {
       this.cart.push(item)
+    },
+    deleteToCart (item) {
+      this.cart = this.cart.filter(el => el.product_name !== item.product_name)
+    },
+    createTicket () {
+      axios.post('http://localhost:8000/market/tickets/',
+        {
+          'total_price': this.totalPrice,
+          'products': this.cart
+        }
+      )
+        .then(response => {
+          console.log(response)
+        })
+    }
+  },
+  computed: {
+    totalQuantity () {
+      return this.cart.reduce(
+        (total, item) => total + item.quantity,
+        0
+      )
+    },
+    totalPrice () {
+      return this.cart.reduce(
+        (total, item) => total + item.quantity * item.product_price,
+        0
+      )
     }
   }
 }
