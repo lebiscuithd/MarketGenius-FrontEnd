@@ -13,6 +13,7 @@
         ></v-avatar>
 
         <v-btn
+          class="font-weight-bold"
           v-for="link in links"
           :key="link"
           text
@@ -37,17 +38,30 @@
     <v-main class="grey lighten-3">
       <v-container>
         <v-row>
-          <v-col cols="2">
-            <v-sheet rounded="lg">
+          <v-col>
+            <v-sheet
+              min-height="70vh"
+              rounded="lg"
+            >
+              <!--  -->
+              <p>hello</p>
+              <Product @clicked="onClickChild" v-for="product in products" :key="product.id" :product="product"/>
+            </v-sheet>
+          </v-col>
+          <v-col cols="4">
+            <v-sheet
+            rounded="lg"
+            min-height="70vh"
+            >
               <v-list color="transparent">
                 <v-list-item
-                  v-for="n in 5"
-                  :key="n"
+                  v-for="item in cart"
+                  :key="item.name"
                   link
                 >
                   <v-list-item-content>
                     <v-list-item-title>
-                      List Item {{ n }}
+                      {{ item.name }}
                     </v-list-item-title>
                   </v-list-item-content>
                 </v-list-item>
@@ -60,20 +74,11 @@
                 >
                   <v-list-item-content>
                     <v-list-item-title>
-                      Refresh
+                      Create Ticket
                     </v-list-item-title>
                   </v-list-item-content>
                 </v-list-item>
               </v-list>
-            </v-sheet>
-          </v-col>
-
-          <v-col>
-            <v-sheet
-              min-height="70vh"
-              rounded="lg"
-            >
-              <!--  -->
             </v-sheet>
           </v-col>
         </v-row>
@@ -83,8 +88,12 @@
 </template>
 
 <script>
+import axios from 'axios'
+import Product from './Product.vue'
+
 export default {
   name: 'HelloWorld',
+  components: { Product },
   data () {
     return {
       msg: 'Welcome to Your Vue.js App',
@@ -93,7 +102,20 @@ export default {
         'Messages',
         'Profile',
         'Updates'
-      ]
+      ],
+      products: [],
+      cart: []
+    }
+  },
+  created () {
+    axios.get('http://localhost:8000/market/products/')
+      .then(response => {
+        this.products = response.data
+      })
+  },
+  methods: {
+    onClickChild (item) {
+      this.cart.push(item)
     }
   }
 }
