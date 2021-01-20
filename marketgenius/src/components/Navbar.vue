@@ -12,12 +12,14 @@
         >
             <v-tab
             to="/"
+            class="font-weight-bold"
             >
             Magasin
             </v-tab>
 
             <v-tab
             to="/tickets"
+            class="font-weight-bold"
             >
             Tickets
             </v-tab>

@@ -26,39 +26,66 @@
             <v-sheet
             rounded="lg"
             min-height="70vh"
+            class="pa-7"
             >
+
+            <v-badge
+            :value="totalQuantity"
+            :content="totalQuantity"
+            color="teal accent-4"
+            overlap
+          >
+            <h1 class=" mx-3 font-weight-bold mb-5 grey--text text--darken-3">Panier</h1>
+          </v-badge>
+
               <v-list color="transparent">
                 <v-list-item
                   v-for="cartItem in cart"
                   :key="cartItem.name"
-                  link
+                  three-line
                 >
                   <v-list-item-content>
-                    <v-list-item-title >
-                      Product : {{ cartItem.product_name }}
-                      <br>
-                      Quantity : {{ cartItem.quantity }}
-                      <br>
-                      Price/u : {{ cartItem.product_price }}
-                      <br>
-                      Lot price : {{ (cartItem.quantity * cartItem.product_price).toFixed(2) }}
-                    </v-list-item-title>
+                    <v-list-item-title class="font-weight-bold grey--text text--darken-3">{{ cartItem.product_name }}</v-list-item-title>
+                    <v-list-item-subtitle>
+                      Quantité : {{ cartItem.quantity }}
+                    </v-list-item-subtitle>
+                    <v-list-item-subtitle>
+                      Prix du lot : {{ (cartItem.quantity * cartItem.product_price).toFixed(2) }} €
+                    </v-list-item-subtitle>
                   </v-list-item-content>
                 </v-list-item>
 
                 <v-divider class="my-2"></v-divider>
 
                 <v-list-item
-                  link
-                  color="grey lighten-4"
+                  two-line
                 >
-                  <v-list-item-content>
-                    <v-list-item-title @click="createTicket()">
-                      {{ totalQuantity }} products
-                      <br>
-                      Total : {{ totalPrice }} €
-                      <br>
-                      Create Ticket
+                  <v-list-item-content v-if="totalQuantity > 0">
+                    <v-list-item-subtitle>
+                      {{ totalQuantity }} produits
+                    </v-list-item-subtitle>
+                    <v-list-item-title
+                    class="font-weight-bold grey--text text--darken-3"
+                    >
+                    Total : {{ totalPrice }} €
+                    </v-list-item-title>
+                    <v-btn
+                      color="teal accent-4"
+                      class="mt-4 white--text col-8"
+                      @click="createTicket()"
+                    >
+                      Créer le ticket
+                      <v-icon
+                        right
+                        dark
+                      >
+                        mdi-receipt
+                      </v-icon>
+                    </v-btn>
+                  </v-list-item-content>
+                  <v-list-item-content v-else>
+                    <v-list-item-title>
+                      Panier vide
                     </v-list-item-title>
                   </v-list-item-content>
                 </v-list-item>
@@ -118,7 +145,7 @@ export default {
         }
       )
         .then(response => {
-          console.log(response)
+          this.$router.push({ path: `/tickets/${response.data.id}` })
         })
     }
   },
