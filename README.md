@@ -1,6 +1,6 @@
-# marketgenius
+# MarketGenius
 
-> This project is the frontend part built with VueJS and Vuetify of an e-commerce application.
+This project is the frontend part built with VueJS and Vuetify of an e-commerce application.
 
 ## Build Setup
 
