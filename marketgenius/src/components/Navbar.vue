@@ -4,25 +4,27 @@
       color="white"
       flat
     >
-      <v-container class="py-0 fill-height">
-        <v-avatar
-          class="mr-10"
-          color="grey darken-1"
-          size="32"
-        ></v-avatar>
 
-        <v-btn
-          class="font-weight-bold"
-          v-for="link in links"
-          :key="link"
-          text
+        <v-tabs
+        centered
+        class="ml-n9"
+        color="teal accent-4"
         >
-          {{ link }}
-        </v-btn>
+            <v-tab
+            to="/"
+            >
+            Magasin
+            </v-tab>
+
+            <v-tab
+            to="/tickets"
+            >
+            Tickets
+            </v-tab>
+        </v-tabs>
 
         <v-spacer></v-spacer>
 
-      </v-container>
     </v-app-bar>
 </template>
 
