@@ -1,16 +1,25 @@
 <template>
-  <v-app>
-    <v-main class="grey lighten-3">
-      <v-container>
+  <div>
+      <v-container class="mt-10">
         <v-row>
-          <v-col>
+          <v-col cols="8">
             <v-sheet
               min-height="70vh"
               rounded="lg"
+              class="pa-7"
             >
-              <!--  -->
-              <p>hello</p>
-              <Product @addItem="addToCart" @deleteItem="deleteToCart" v-for="product in products" :key="product.id" :product="product"/>
+            <h1 class="font-weight-bold ml-2 mb-5 grey--text text--darken-3">Produits</h1>
+              <v-row>
+                <Product
+                @addItem="addToCart"
+                @deleteItem="deleteToCart"
+                v-for="product in products"
+                :key="product.id"
+                :product="product"
+                :cart="cart"
+                class="mx-auto"
+                />
+              </v-row>
             </v-sheet>
           </v-col>
           <v-col cols="4">
@@ -32,7 +41,7 @@
                       <br>
                       Price/u : {{ cartItem.product_price }}
                       <br>
-                      Lot price : {{ cartItem.quantity * cartItem.product_price }}
+                      Lot price : {{ (cartItem.quantity * cartItem.product_price).toFixed(2) }}
                     </v-list-item-title>
                   </v-list-item-content>
                 </v-list-item>
@@ -58,16 +67,15 @@
           </v-col>
         </v-row>
       </v-container>
-    </v-main>
-  </v-app>
+  </div>
 </template>
 
 <script>
 import axios from 'axios'
-import Product from './Product.vue'
+import Product from '../components/Product.vue'
 
 export default {
-  name: 'HelloWorld',
+  name: 'Shop',
   components: { Product },
   data () {
     return {

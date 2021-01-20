@@ -1,8 +1,10 @@
 <template>
-  <div id="app">
-    <Navbar class="navbar"/>
-    <router-view/>
-  </div>
+  <v-app id="app">
+    <Navbar/>
+    <v-main class="grey lighten-3">
+      <router-view/>
+    </v-main>
+  </v-app>
 </template>
 
 <script>
@@ -17,11 +19,8 @@ export default {
 #app {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
 }
-.v-application .navbar {
+.v-application {
   font-family: 'Poppins', sans-serif;
 }
 </style>
