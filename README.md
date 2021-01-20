@@ -13,6 +13,6 @@ npm run dev
 
 ```
 
-### Back-End repository
+## Back-End repository
 
 You can find the back-end project built with Django Rest here : https://github.com/lebiscuithd/MarketGenius-BackEnd
