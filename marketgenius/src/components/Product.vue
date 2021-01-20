@@ -31,6 +31,8 @@
                 dark
                 small
                 color="red lighten-1"
+                v-if="isInCart"
+
                 @click="deleteToCart()"
                 >
                     <v-icon dark>
@@ -82,9 +84,16 @@ export default {
     }
   },
   computed: {
-    cardColor () {
+    isInCart () {
       let findIndex = this.cart.findIndex(obj => obj.product_id === this.item.product_id)
       if (findIndex !== -1) {
+        return true
+      } else {
+        return false
+      }
+    },
+    cardColor () {
+      if (this.isInCart) {
         return 'addedToCart'
       } else {
         return 'notInCart'

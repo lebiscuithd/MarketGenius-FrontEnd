@@ -4,12 +4,12 @@
       color="white"
       flat
     >
-
         <v-tabs
         centered
         class="ml-n9"
         color="teal accent-4"
         >
+
             <v-tab
             to="/"
             class="font-weight-bold"

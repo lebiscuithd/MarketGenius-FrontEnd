@@ -17,7 +17,7 @@
                 :key="product.id"
                 :product="product"
                 :cart="cart"
-                class="mx-auto"
+                class="mx-auto mx-xl-3"
                 />
               </v-row>
             </v-sheet>
@@ -45,7 +45,11 @@
                   three-line
                 >
                   <v-list-item-content>
-                    <v-list-item-title class="font-weight-bold grey--text text--darken-3">{{ cartItem.product_name }}</v-list-item-title>
+                    <v-list-item-title
+                    class="font-weight-bold grey--text text--darken-3"
+                    >
+                      {{ cartItem.product_name }}
+                    </v-list-item-title>
                     <v-list-item-subtitle>
                       Quantité : {{ cartItem.quantity }}
                     </v-list-item-subtitle>
@@ -67,7 +71,7 @@
                     <v-list-item-title
                     class="font-weight-bold grey--text text--darken-3"
                     >
-                    Total : {{ totalPrice }} €
+                      Total : {{ totalPrice }} €
                     </v-list-item-title>
                     <v-btn
                       color="teal accent-4"
@@ -83,11 +87,12 @@
                       </v-icon>
                     </v-btn>
                   </v-list-item-content>
-                  <v-list-item-content v-else>
-                    <v-list-item-title>
-                      Panier vide
-                    </v-list-item-title>
-                  </v-list-item-content>
+                  <v-row v-else>
+                    <v-icon x-large color="grey">
+                      mdi-cart-remove
+                    </v-icon>
+                    <p class="grey--text my-auto ml-3">Votre panier est vide</p>
+                  </v-row>
                 </v-list-item>
               </v-list>
             </v-sheet>
