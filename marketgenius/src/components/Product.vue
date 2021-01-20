@@ -2,61 +2,62 @@
 
     <div>
 
-        <v-card
-        class="my-5 pb-4"
-        width="200"
-        :class="cardColor"
-        rounded="lg"
-        >
-            <v-img
-            height="150"
-            :src="product.product_thumbnail"
-            />
+            <v-card
+            class="my-5 pb-4"
+            width="200"
+            :class="cardColor"
+            rounded="lg"
+            >
+                <v-img
+                height="150"
+                :src="product.product_thumbnail"
+                />
 
-            <v-card-title>
-                {{ product.product_name }}
-            </v-card-title>
+                <v-card-title>
+                    {{ product.product_name }}
+                </v-card-title>
 
-            <v-card-text>
-                <div class="subtitle-1">
-                    {{ product.product_price }} €
-                </div>
-            </v-card-text>
+                <v-card-text>
+                    <div class="subtitle-1">
+                        {{ product.product_price }} €
+                            <v-icon v-if="isPromoted">
+                                mdi-brightness-percent
+                            </v-icon>
+                    </div>
+                </v-card-text>
 
-            <v-row class="float-right">
+                <v-row class="float-right">
 
-                <v-btn
-                class="mx-2"
-                fab
-                dark
-                small
-                color="red lighten-1"
-                v-if="isInCart"
+                    <v-btn
+                    class="mx-2"
+                    fab
+                    dark
+                    small
+                    color="red lighten-1"
+                    v-if="isInCart"
 
-                @click="deleteToCart()"
-                >
-                    <v-icon dark>
-                        mdi-minus
-                    </v-icon>
-                </v-btn>
+                    @click="deleteToCart()"
+                    >
+                        <v-icon dark>
+                            mdi-minus
+                        </v-icon>
+                    </v-btn>
 
-                <v-btn
-                class="mx-2"
-                fab
-                dark
-                small
-                color="teal accent-4"
-                @click="addToCart()"
-                >
-                    <v-icon dark>
-                        mdi-plus
-                    </v-icon>
-                </v-btn>
+                    <v-btn
+                    class="mx-2"
+                    fab
+                    dark
+                    small
+                    color="teal accent-4"
+                    @click="addToCart()"
+                    >
+                        <v-icon dark>
+                            mdi-plus
+                        </v-icon>
+                    </v-btn>
 
-            </v-row>
-
-        </v-card>
-
+                </v-row>
+            </v-card>
     </div>
 
 </template>
@@ -97,6 +98,13 @@ export default {
         return 'addedToCart'
       } else {
         return 'notInCart'
+      }
+    },
+    isPromoted () {
+      if (this.product.product_promotion !== null) {
+        return true
+      } else {
+        return false
       }
     }
   }
