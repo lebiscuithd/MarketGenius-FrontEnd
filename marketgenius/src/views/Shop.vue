@@ -145,7 +145,7 @@ export default {
         }
       )
         .then(response => {
-          this.$router.push({ path: `/tickets/${response.data.id}` })
+          this.$router.push({ path: 'ticket', query: { ticketID: response.data.id } })
         })
     }
   },
